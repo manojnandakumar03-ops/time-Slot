@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Class Timetable</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #243b55;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 18px 10px;
+            text-align: center;
+            height: 75px;
+        }
+
+        th {
+            background: #243b55;
+            color: white;
+            font-size: 17px;
+        }
+
+        .time {
+            background: #e0efff;
+            color: #075985;
+            font-weight: bold;
+            width: 110px;
+        }
+
+        td {
+            color: #334155;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        tr:nth-child(even) td:not(.time) {
+            background: #f8fafc;
+        }
+
+        td:hover {
+            background: #e0f2fe;
+        }
+
+        .empty {
+            color: #cbd5e1;
+        }
+
+        .no-data {
+            text-align: center;
+            color: red;
+            padding: 20px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 800px) {
+            body {
+                padding: 10px;
+            }
+
+            table {
+                min-width: 850px;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>SEMESTER TIMETABLE</h1>
+
+    <div class="table-container">
+
+        <table>
+
+            <tr>
+                <th>Day →<br>Time ↓</th>
+
+                {% for day in days %}
+                    <th>{{ day }}</th>
+                {% endfor %}
+            </tr>
+
+            {% if has_records %}
+
+                {% for row in timetable_rows %}
+
+                    <tr>
+
+                        <td class="time">
+                            {{ row.time }}
+                        </td>
+
+                        {% for subject in row.subjects %}
+
+                            <td>
+                                {% if subject %}
+                                    {{ subject }}
+                                {% else %}
+                                    <span class="empty">—</span>
+                                {% endif %}
+                            </td>
+
+                        {% endfor %}
+
+                    </tr>
+
+                {% endfor %}
+
+            {% else %}
+
+                <tr>
+                    <td colspan="7" class="no-data">
+                        No timetable records available.
+                    </td>
+                </tr>
+
+            {% endif %}
+
+        </table>
+
+    </div>
+
+</body>
+</html>
